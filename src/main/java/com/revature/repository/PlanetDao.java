@@ -24,8 +24,21 @@ public class PlanetDao {
 	}
 
 	public Planet getPlanetById(String username, int planetId) {
-		// TODO Auto-generated method stub
-		return null;
+		try (Connection connection = ConnectionUtil.createConnection()) {
+			String sql = "select * from planets where id = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, planetId);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			Planet planet = new Planet();
+			planet.setId(rs.getInt(1));
+			planet.setName(rs.getString(2));
+			planet.setOwnerId(rs.getInt(3));
+			return planet;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());//add logging
+            return new Planet();
+		}
 	}
 
 	public Planet createPlanet(String username, Planet p) {
@@ -59,6 +72,6 @@ public class PlanetDao {
 		PlanetDao dao = new PlanetDao();
 		Planet newPlanet = new Planet();
 		newPlanet.setName("Pluto");
-		System.out.println(dao.createPlanet("lomback", newPlanet));
+		System.out.println(dao.getPlanetById("lomback", 1));
 	}
 }
