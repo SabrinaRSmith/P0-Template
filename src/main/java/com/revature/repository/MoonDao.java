@@ -88,7 +88,15 @@ public class MoonDao {
 	}
 
 	public void deleteMoonById(int moonId) {
-		// TODO Auto-generated method stub
+		try (Connection connection = ConnectionUtil.createConnection()) {
+			String sql = "delete from moons where id = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, moonId);
+			int rowsAffected = ps.executeUpdate();
+			System.out.println("Rows affected: " + rowsAffected);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());//add logging
+		}
 	}
 
 	public List<Moon> getMoonsFromPlanet(int planetId) throws SQLException{//sevice level handle exception
@@ -111,14 +119,7 @@ public class MoonDao {
 
 	public static void main(String[] args) {
 		MoonDao dao = new MoonDao();
-		Moon newMoon = new Moon();
-		newMoon.setName("Moon");
-		newMoon.setMyPlanetId(1);
-		try {
-			System.out.println(dao.getMoonsFromPlanet(1));
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
+		dao.deleteMoonById(2);
 		
 	}
 }
