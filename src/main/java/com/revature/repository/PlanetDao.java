@@ -69,12 +69,10 @@ public class PlanetDao {
 
 	public Planet createPlanet(String username, Planet p) {
 		try (Connection connection = ConnectionUtil.createConnection()) {
-			UserDao userDao = new UserDao();
-			User user = userDao.getUserByUsername(username);
 			String sql = "insert into planets values (default,?,?)";
 			PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, p.getName());
-			ps.setInt(2, user.getId());
+			ps.setInt(2, p.getOwnerId());
 			ps.execute();
 			ResultSet rs = ps.getGeneratedKeys();
 			Planet newPlanet = new Planet();
@@ -82,7 +80,7 @@ public class PlanetDao {
 			int newId = rs.getInt(1);
 			newPlanet.setId(newId);
 			newPlanet.setName(p.getName());
-			newPlanet.setOwnerId(user.getId());
+			newPlanet.setOwnerId(p.getOwnerId());
 			return newPlanet;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());//add logging
