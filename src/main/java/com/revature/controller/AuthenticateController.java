@@ -30,7 +30,7 @@ public class AuthenticateController {
 
 		User newUser = userService.register(registerRequest);
 
-		ctx.json(newUser).status(201);
+		ctx.json(newUser).status(201);//nothing to handle something going wrong
 	}
 
 	public void invalidateSession(Context ctx) {
