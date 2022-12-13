@@ -52,12 +52,12 @@ public class UserDao {
     }
 
     //test getUserByUsername
-    public static void main(String[] args) {
-        UserDao dao = new UserDao();
-        UsernamePasswordAuthentication newUser = new UsernamePasswordAuthentication();
-        newUser.setUsername("lomback");
-        newUser.setPassword("I want Spring");
-        System.out.println(dao.getUserByUsername("lomback"));
-    }
+    // public static void main(String[] args) {
+    //     UserDao dao = new UserDao();
+    //     UsernamePasswordAuthentication newUser = new UsernamePasswordAuthentication();
+    //     newUser.setUsername("lomback");
+    //     newUser.setPassword("I want Spring");
+    //     System.out.println(dao.getUserByUsername("lomback"));
+    // }
 
 }

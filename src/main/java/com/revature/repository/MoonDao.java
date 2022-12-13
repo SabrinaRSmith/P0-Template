@@ -117,9 +117,9 @@ public class MoonDao {
 		}
 	}
 
-	public static void main(String[] args) {
-		MoonDao dao = new MoonDao();
-		dao.deleteMoonById(2);
+	// public static void main(String[] args) {
+	// 	MoonDao dao = new MoonDao();
+	// 	dao.deleteMoonById(2);
 		
-	}
+	// }
 }

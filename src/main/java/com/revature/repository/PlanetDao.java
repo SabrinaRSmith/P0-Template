@@ -99,9 +99,9 @@ public class PlanetDao {
 		}
 	}
 
-	public static void main(String[] args) {
-		PlanetDao dao = new PlanetDao();
-		dao.deletePlanetById(2);
+	// public static void main(String[] args) {
+	// 	PlanetDao dao = new PlanetDao();
+	// 	dao.deletePlanetById(2);
 		
-	}
+	// }
 }
