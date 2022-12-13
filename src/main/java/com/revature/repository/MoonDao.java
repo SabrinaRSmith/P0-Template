@@ -23,8 +23,21 @@ public class MoonDao {
 	}
 
 	public Moon getMoonById(String username, int moonId) {
-		// TODO Auto-generated method stub
-		return null;
+		try (Connection connection = ConnectionUtil.createConnection()) {
+			String sql = "select * from moons where id = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, moonId);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			Moon moon = new Moon();
+			moon.setId(rs.getInt(1));
+			moon.setName(rs.getString(2));
+			moon.setMyPlanetId(rs.getInt(3));
+			return moon;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());//add logging
+            return new Moon();
+		}
 	}
 
 	public Moon createMoon(String username, Moon m) {
@@ -62,6 +75,6 @@ public class MoonDao {
 		Moon newMoon = new Moon();
 		newMoon.setName("Moon");
 		newMoon.setMyPlanetId(1);
-		System.out.println(dao.createMoon("username", newMoon).getId());
+		System.out.println(dao.getMoonById("username", 1));
 	}
 }
