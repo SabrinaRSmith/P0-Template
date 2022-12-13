@@ -91,9 +91,22 @@ public class MoonDao {
 		// TODO Auto-generated method stub
 	}
 
-	public List<Moon> getMoonsFromPlanet(int planetId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Moon> getMoonsFromPlanet(int planetId) throws SQLException{//sevice level handle exception
+		try(Connection connection = ConnectionUtil.createConnection()){
+			String sql = "select * from moons where myplanetid = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, planetId);
+			ResultSet rs = ps.executeQuery();
+			List<Moon> moonList = new ArrayList<>();
+			while(rs.next()){
+				Moon moon = new Moon();
+				moon.setId(rs.getInt(1));
+				moon.setName(rs.getString(2));
+				moon.setMyPlanetId(rs.getInt(3));
+				moonList.add(moon);
+			}
+			return moonList;
+		}
 	}
 
 	public static void main(String[] args) {
@@ -102,7 +115,7 @@ public class MoonDao {
 		newMoon.setName("Moon");
 		newMoon.setMyPlanetId(1);
 		try {
-			System.out.println(dao.getAllMoons());
+			System.out.println(dao.getMoonsFromPlanet(1));
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
