@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.revature.models.Planet;
-import com.revature.models.User;
 import com.revature.utilities.ConnectionUtil;
 
 public class PlanetDao {
