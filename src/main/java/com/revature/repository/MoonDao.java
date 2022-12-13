@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.models.Moon;
@@ -12,9 +13,21 @@ import com.revature.utilities.ConnectionUtil;
 
 public class MoonDao {
     
-    public List<Moon> getAllMoons() {
-		// TODO Auto-generated method stub
-		return null;
+    public List<Moon> getAllMoons() throws SQLException{//sevice level handle exception
+		try(Connection connection = ConnectionUtil.createConnection()){
+			String sql = "select * from moons";
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			List<Moon> moonList = new ArrayList<>();
+			while(rs.next()){
+				Moon moon = new Moon();
+				moon.setId(rs.getInt(1));
+				moon.setName(rs.getString(2));
+				moon.setMyPlanetId(rs.getInt(3));
+				moonList.add(moon);
+			}
+			return moonList;
+		}
 	}
 
 	public Moon getMoonByName(String username, String moonName) {
@@ -88,6 +101,11 @@ public class MoonDao {
 		Moon newMoon = new Moon();
 		newMoon.setName("Moon");
 		newMoon.setMyPlanetId(1);
-		System.out.println(dao.getMoonByName("username", "Moon"));
+		try {
+			System.out.println(dao.getAllMoons());
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 }
