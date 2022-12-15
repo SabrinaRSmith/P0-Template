@@ -23,7 +23,7 @@ public class RequestMapping {
 			authController.authenticate(ctx);
 			long finish = System.currentTimeMillis();
 			long latency = finish - start;
-			logger.info("Status:{} Latency:{}", ctx.status(), latency);
+			logger.info("Path:{} Status:{} Latency:{}", ctx.matchedPath(), ctx.status(), latency);
 		});
 
 		// Register a new user, sending username/password in the body as JSON
@@ -54,7 +54,7 @@ public class RequestMapping {
 		app.get("api/planet/{name}", ctx -> planetController.getPlanetByName(ctx));
 		
 		// Get a planet with matching ID
-		app.get("api/planet/{id}", ctx -> planetController.getPlanetByID(ctx));
+		app.get("api/planet/id/{id}", ctx -> planetController.getPlanetByID(ctx));
 		
 		// Get moons associated with a planet
 		app.get("api/planet/{id}/moons", ctx -> moonController.getPlanetMoons(ctx));
@@ -66,7 +66,7 @@ public class RequestMapping {
 		app.get("api/moon/{name}", ctx -> moonController.getMoonByName(ctx));
 		
 		// Get a moon with matching ID
-		app.get("api/moon/{id}", ctx -> moonController.getMoonById(ctx));
+		app.get("api/moon/id/{id}", ctx -> moonController.getMoonById(ctx));
 		
 
 		// Create a new planet, sending the data in the body as JSON
