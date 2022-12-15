@@ -1,6 +1,7 @@
 package com.revature.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.models.Planet;
@@ -19,6 +20,7 @@ public class PlanetService {
 			return this.dao.getAllPlanets();
 		} catch (SQLException e) {
 			// TODO: handle exception
+			return new ArrayList<>();
 		}
 		
 	}

@@ -1,6 +1,7 @@
 package com.revature.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.models.Moon;
@@ -19,6 +20,7 @@ public class MoonService {
 			return this.dao.getAllMoons();
 		} catch (SQLException e) {
 			// TODO: handle exception
+			return new ArrayList<>();
 		}
 		
 	}
@@ -44,6 +46,7 @@ public class MoonService {
 			return this.dao.getMoonsFromPlanet(planetId);
 		} catch (SQLException e) {
 			// TODO: handle exception
+			return new ArrayList<>();
 		}		
 	}
 }
