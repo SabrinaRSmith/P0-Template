@@ -1,5 +1,8 @@
 package com.revature.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.revature.exceptions.NotLoggedInException;
 
 import io.javalin.Javalin;
@@ -9,11 +12,19 @@ public class RequestMapping {
 	private static AuthenticateController authController = new AuthenticateController();
 	private static PlanetController planetController = new PlanetController();
 	private static MoonController moonController = new MoonController();
+
+	public static Logger logger = LoggerFactory.getLogger(RequestMapping.class);
 	
 	public static void setupEndpoints(Javalin app) {
 		
 		// Authenticate user and create a session for the user, sending username/password in the body as JSON
-		app.post("/login", ctx -> authController.authenticate(ctx));
+		app.post("/login", ctx -> {
+			long start = System.currentTimeMillis();
+			authController.authenticate(ctx);
+			long finish = System.currentTimeMillis();
+			long latency = finish - start;
+			logger.info("Status:{} Latency:{}", ctx.status(), latency);
+		});
 
 		// Register a new user, sending username/password in the body as JSON
 		app.post("/register", ctx -> authController.register(ctx));
