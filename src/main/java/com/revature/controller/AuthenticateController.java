@@ -16,7 +16,7 @@ public class AuthenticateController {
 		
 		User u = userService.getUserByUsername(loginRequest.getUsername());
 	
-		if (u != null && u.getPassword().equals(loginRequest.getPassword())) {
+		if (u.getUsername() != null && u.getPassword().equals(loginRequest.getPassword())) {
 			ctx.sessionAttribute("user", u);
 			ctx.status(200);
 		} else {
