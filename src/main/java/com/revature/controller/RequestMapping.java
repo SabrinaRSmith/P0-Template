@@ -14,9 +14,9 @@ public class RequestMapping {
 	private static MoonController moonController = new MoonController();
 
 	public static Logger logger = LoggerFactory.getLogger(RequestMapping.class);
+	public static long s;
 	
 	public static void setupEndpoints(Javalin app) {
-		
 		// Authenticate user and create a session for the user, sending username/password in the body as JSON
 		app.post("/login", ctx -> {
 			long start = System.currentTimeMillis();
@@ -48,6 +48,7 @@ public class RequestMapping {
 		// Throw a custom exception if a session is not valid
 		// This exception will be handled separately
 		app.before("/api/*", ctx -> {	
+			s = System.currentTimeMillis();
 			if(!authController.verifySession(ctx)) {
 				throw new NotLoggedInException();
 			}
@@ -56,6 +57,9 @@ public class RequestMapping {
 		// Handling the exception when a session doesn't exist
 		app.exception(NotLoggedInException.class, (e,ctx) -> {
 			ctx.json(e.getMessage()).status(401);
+			long finish = System.currentTimeMillis();
+			long latency = finish - s;
+			logger.info("Path:{} Status:{} Latency:{}", ctx.matchedPath(), ctx.status(), latency);
 		});
 		
 		
