@@ -18,7 +18,11 @@ public class MainDriver {
 		//test logger
 		logger.info("starting");
 
-		Javalin app = Javalin.create();
+		Javalin app = Javalin.create(config -> {
+			config.requestLogger.http((ctx, ms) -> {
+				logger.info("Path:{} Status:{} Latency:{}", ctx.path(), ctx.status(), ms);
+			});
+		});
 		// Javalin app = Javalin.create(confg ->{
 		// 	confg.plugins.enableDevLogging();
 		// });
