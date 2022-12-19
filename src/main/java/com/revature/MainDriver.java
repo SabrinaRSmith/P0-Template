@@ -18,10 +18,10 @@ public class MainDriver {
 		//test logger
 		logger.info("starting");
 
-		Javalin app = Javalin.create();
-		// Javalin app = Javalin.create(confg ->{
-		// 	confg.plugins.enableDevLogging();
-		// });
+		//Javalin app = Javalin.create();
+		Javalin app = Javalin.create(confg ->{
+			confg.plugins.enableDevLogging();
+		});
 		RequestMapping.setupEndpoints(app);
 		app.start(7000);
 	}
