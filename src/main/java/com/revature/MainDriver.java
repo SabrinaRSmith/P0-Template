@@ -20,7 +20,7 @@ public class MainDriver {
 
 		Javalin app = Javalin.create(config -> {
 			config.requestLogger.http((ctx, ms) -> {
-				logger.info("Path:{} Status:{} Latency:{}", ctx.path(), ctx.status(), ms);
+				logger.info("Path:{} Status:{} Latency:{}", ctx.path(), ctx.status(), Math.round(ms));
 			});
 		});
 		// Javalin app = Javalin.create(confg ->{
